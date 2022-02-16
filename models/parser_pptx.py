@@ -1,5 +1,5 @@
 from pptx import Presentation
-from api.api import API
+from models.api import translate
 
 
 class ParserPPTX(object):
@@ -17,5 +17,5 @@ class ParserPPTX(object):
                     continue
                 for paragraph in shape.text_frame.paragraphs:
                     for run in paragraph.runs:
-                        run.text = API.translate(self.src_lang, self.des_lang, run.text)
+                        run.text = translate(self.src_lang, self.des_lang, run.text)
         prs.save(self.des_file)

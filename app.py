@@ -1,8 +1,13 @@
 from flask import Flask,request
 from models.simple_factory import SimpleFactory
-from api.api import API
 app = Flask(__name__)
 
+
+@app.route('/')
+def root_test():
+    parser = SimpleFactory.product_parser("a.pdf", "b.pdf", "Chinese", "English")
+    parser.parse()
+    return 'hello'
 
 @app.route('/trans_file')
 def trans_file():

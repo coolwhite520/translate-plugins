@@ -4,11 +4,9 @@ import requests, json
 import time
 import redis
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0)
-
-key_sign = "Today I want to eat noodle."
 ProxyUrl = '192.168.3.32'
-Port = 5000
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+key_sign = "Today I want to eat noodle."
 
 
 def generate_sha1(content):
@@ -19,7 +17,7 @@ def generate_sha1(content):
 
 
 def call_http(src_lang, des_lang, content):
-    url = 'http://{0}:{1}/translate'.format(ProxyUrl, Port)
+    url = 'http://{0}:{1}/translate'.format(ProxyUrl, 5000)
     now = time.time()  # 返回float数据
     now = int(now)
     format_str = "src_lang={0}&des_lang={1}&content={2}&timestamp={3}".format(src_lang, des_lang, content, now)
@@ -36,14 +34,13 @@ def call_http(src_lang, des_lang, content):
     return ''
 
 
-class API(object):
+def translate(src_lang, des_lang, content):
+    format_str = "src_lang={0}&des_lang={1}&content={2}".format(src_lang, des_lang, content)
+    sha1_str = generate_sha1(format_str)
+    trans_content = r.get(sha1_str)
+    if trans_content is None:
+        trans_content = call_http(src_lang, des_lang, content)
+        r.set(sha1_str, trans_content)
+    return trans_content
 
-    @staticmethod
-    def translate(src_lang, des_lang, content):
-        format_str = "src_lang={0}&des_lang={1}&content={2}".format(src_lang, des_lang, content)
-        sha1_str = generate_sha1(format_str)
-        trans_content = r.get(sha1_str)
-        if trans_content is None:
-            trans_content = call_http(src_lang, des_lang, content)
-            r.set(sha1_str, trans_content)
-        return trans_content
+
