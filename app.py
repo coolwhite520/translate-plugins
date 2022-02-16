@@ -1,15 +1,38 @@
-from flask import Flask,request
-from models.simple_factory import SimpleFactory
+from flask import Flask,request,jsonify
+from parsers.simple_factory import SimpleFactory
+from converters import p2d
+import json
+
 app = Flask(__name__)
 
 
-@app.route('/')
-def root_test():
-    parser = SimpleFactory.product_parser("a.pdf", "b.pdf", "Chinese", "English")
-    parser.parse()
-    return 'hello'
+@app.route('/convert_file', methods=['POST'])
+def convert_file():
+    if request.method == 'POST':
+        try:
+            a = request.get_data()
+            data = json.loads(a)
+            type = data['type']
+            src_file = data['src_file']
+            des_file = data['des_file']
+            if type == 'p2d': #pdf 2 docx
+                p2d.convert(src_file, des_file)
+            ret = {}
+            ret["code"] = 200
+            ret["msg"] = "success"
+            return jsonify(ret)
+        except Exception as e:
+            ret = {}
+            ret["code"] = -1002
+            ret['msg'] = str(e)
+            return jsonify(ret)
+    else:
+        ret = {}
+        ret["code"] = -1003
+        return jsonify(ret)
 
-@app.route('/trans_file')
+
+@app.route('/trans_file', methods=['POST'])
 def trans_file():
     if request.method == 'POST':
         try:

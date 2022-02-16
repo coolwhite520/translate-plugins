@@ -1,5 +1,5 @@
 from pptx import Presentation
-from models.api import translate
+from parsers.api import translate
 
 
 class ParserPPTX(object):
