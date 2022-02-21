@@ -6,16 +6,23 @@ import json
 app = Flask(__name__)
 
 
+@app.route('/')
+def test():
+    parser = SimpleFactory.product_parser(99, "test_files/aa.eml", "test_files/aa2.eml", "English", "Chinese")
+#     parser = SimpleFactory.product_parser(99, "test_files/attachment.eml", "test_files/attachment2.eml", "Chinese", "English")
+    parser.parse()
+    return 'hello'
+
 @app.route('/convert_file', methods=['POST'])
 def convert_file():
     if request.method == 'POST':
         try:
             a = request.get_data()
             data = json.loads(a)
-            type = data['type']
+            convert_type = data['convert_type']
             src_file = data['src_file']
             des_file = data['des_file']
-            if type == 'p2d': #pdf 2 docx
+            if convert_type == 'p2d': #pdf 2 docx
                 p2d.convert(src_file, des_file)
             ret = {}
             ret["code"] = 200
@@ -38,11 +45,12 @@ def trans_file():
         try:
             a = request.get_data()
             data = json.loads(a)
+            row_id = data['row_id']
             src_lang = data['src_lang']
             des_lang = data['des_lang']
             src_file = data['src_file']
             des_file = data['des_file']
-            parser = SimpleFactory.product_parser(src_file, des_file, src_lang, des_lang)
+            parser = SimpleFactory.product_parser(row_id, src_file, des_file, src_lang, des_lang)
             parser.parse()
             ret = {}
             ret["code"] = 200

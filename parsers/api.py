@@ -5,7 +5,7 @@ import time
 import redis
 
 ProxyUrl = '192.168.3.32'
-r = redis.StrictRedis(host='localhost', port=6379, db=0)
+r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True, charset='UTF-8', encoding='UTF-8')
 key_sign = "Today I want to eat noodle."
 
 
