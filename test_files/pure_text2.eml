@@ -1,0 +1,22 @@
+Content-Type: multipart/mixed; boundary="===============5055777852422746384=="
+MIME-Version: 1.0
+Subject: The weather is good today.
+From: "81929154"<81929154@qq.com>
+Date: 2022-02-21 16:24:34
+To: "785461999"<785461999@qq.com>
+
+--===============5055777852422746384==
+Content-Type: text/html; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+<html>
+ <body>
+  <div style="font:14px/1.5 'Lucida Grande'; color:#333;">
+   <p style="font:14px/1.5 'Lucida Grande';margin:0;">
+    Today, the weather is good, do you want to go to the mountain together?
+   </p>
+  </div>
+ </body>
+</html>
+--===============5055777852422746384==--
