@@ -1,7 +1,7 @@
 import pymysql
 
 # 打开数据库连接
-db = pymysql.connect(host='localhost',
+db = pymysql.connect(host='trans_mysql',
                      port=3310,
                      user='root',
                      password='NB2Ffj!lPTe&yOm5',

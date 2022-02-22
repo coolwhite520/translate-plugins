@@ -1,6 +1,6 @@
 from flanker import mime
 from bs4 import BeautifulSoup
-from pyquery import PyQuery as pq
+# from pyquery import PyQuery as pq
 
 
 extracted_data = {}
