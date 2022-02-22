@@ -6,12 +6,12 @@ import json
 app = Flask(__name__)
 
 
-@app.route('/')
-def test():
-    parser = SimpleFactory.product_parser(99, "test_files/aa.eml", "test_files/aa2.eml", "English", "Chinese")
-#     parser = SimpleFactory.product_parser(99, "test_files/attachment.eml", "test_files/attachment2.eml", "Chinese", "English")
-    parser.parse()
-    return 'hello'
+# @app.route('/')
+# def test():
+#     parser = SimpleFactory.product_parser(99, "test_files/aa.eml", "test_files/aa2.eml", "English", "Chinese")
+# #     parser = SimpleFactory.product_parser(99, "test_files/attachment.eml", "test_files/attachment2.eml", "Chinese", "English")
+#     parser.parse()
+#     return 'hello'
 
 @app.route('/convert_file', methods=['POST'])
 def convert_file():
@@ -31,7 +31,7 @@ def convert_file():
         except Exception as e:
             ret = {}
             ret["code"] = -1002
-            ret['msg'] = str(e)
+            ret['msg'] = e
             return jsonify(ret)
     else:
         ret = {}
@@ -56,8 +56,9 @@ def trans_file():
             ret["code"] = 200
             ret["msg"] = "success"
             return jsonify(ret)
-        except:
+        except Exception as e:
             ret = {}
+            ret['msg'] = e
             ret["code"] = -1002
             return jsonify(ret)
     else:
@@ -67,4 +68,4 @@ def trans_file():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5555, threaded=True)
+    app.run(host="0.0.0.0", port=5001, threaded=True)

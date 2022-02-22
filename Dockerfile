@@ -7,5 +7,5 @@ ADD . /code
 WORKDIR /code
 # 安装支持
 RUN pip install -r requirements.txt
-EXPOSE 5555
+EXPOSE 5001
 CMD ["python", "./app.py", "--thread"]
