@@ -38,6 +38,10 @@ def parse_eml_content(eml):
     return extracted_data, inline_attachments, base64_attachment
 
 
+def calculate_total_progress(all_paragraphs):
+    return all_paragraphs, len(all_paragraphs)
+
+
 class ParserEML(object):
 
     def __init__(self, row_id, src_file, des_file, src_lang, des_lang):
@@ -84,9 +88,6 @@ class ParserEML(object):
     #         message.append(create.text("html", html_text))
     #         outfile.write(message.to_string())
 
-    def calculate_total_progress(self, all_paragraphs):
-        return all_paragraphs, len(all_paragraphs)
-
     def parse(self):
         with open(self.src_file, 'rb') as f:
             raw_email = f.read()
@@ -101,7 +102,7 @@ class ParserEML(object):
             self.soup = BeautifulSoup(eml_body, features="lxml")
             all_paragraphs = self.soup.find_all("p", recursive=True)
 
-            all_tags, total = self.calculate_total_progress(all_paragraphs)
+            all_tags, total = calculate_total_progress(all_paragraphs)
 
             current = 0
             percent = 0

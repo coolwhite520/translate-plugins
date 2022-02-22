@@ -2,10 +2,11 @@ from flanker import mime
 from bs4 import BeautifulSoup
 from pyquery import PyQuery as pq
 
+
 extracted_data = {}
 inline_attachments = {}
 base64_attachment = {}
-with open("test_files/testing.eml", 'rb') as f:
+with open("test_files/aa.eml", 'rb') as f:
     raw_email = f.read()
     mimeContents = mime.from_string(raw_email)
     # if mimeContents.content_type.is_multipart():
@@ -29,10 +30,11 @@ with open("test_files/testing.eml", 'rb') as f:
                 base64_attachment[part.detected_file_name] = part.body
 
 
-    # html_doc = extracted_data['html_body']
-    # soup = BeautifulSoup(html_doc, features="lxml")
-    # all_paragraphs = soup.find_all("p", recursive=True)
-    # for p in all_paragraphs:
-    #     print(p.text)
+    html_doc = extracted_data['html_body']
+    soup = BeautifulSoup(html_doc, features="lxml")
+    all_paragraphs = soup.find_all("p", recursive=True)
+    for p in all_paragraphs:
+        for c in p.children:
+            print(c)
 
     # print(soup.prettify())
