@@ -1,11 +1,11 @@
-import hmac
 import base64
-import requests, json
+import hmac
 import time
+
+import json
 import redis
+import requests
 
-
-r = redis.StrictRedis(host='trans_redis', port=6379, db=0, decode_responses=True, charset='UTF-8', encoding='UTF-8')
 key_sign = "Today I want to eat noodle."
 
 
@@ -34,13 +34,21 @@ def call_http(src_lang, des_lang, content):
     return ''
 
 
-def translate(src_lang, des_lang, content):
-    format_str = "src_lang={0}&des_lang={1}&content={2}".format(src_lang, des_lang, content)
-    sha1_str = generate_sha1(format_str)
-    trans_content = r.get(sha1_str)
-    if trans_content is None:
-        trans_content = call_http(src_lang, des_lang, content)
-        r.set(sha1_str, trans_content)
-    return trans_content
+class TranslateAPI(object):
+    def __init__(self):
+        self.r = redis.StrictRedis(host='trans_redis', port=6379, db=0, decode_responses=True, charset='UTF-8',
+                                   encoding='UTF-8')
+
+    def translate(self, src_lang, des_lang, content):
+        format_str = "src_lang={0}&des_lang={1}&content={2}".format(src_lang, des_lang, content)
+        sha1_str = generate_sha1(format_str)
+        trans_content = self.r.get(sha1_str)
+        if trans_content is None:
+            trans_content = call_http(src_lang, des_lang, content)
+            self.r.set(sha1_str, trans_content)
+        return trans_content
+
+    def close(self):
+        self.r.close()
 
 

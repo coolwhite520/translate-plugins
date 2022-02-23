@@ -1,6 +1,6 @@
 from flanker import mime
-from parsers.api import translate
-from parsers.db import update_record_progress
+from parsers.api import TranslateAPI
+from parsers.db import DB
 from email import generator
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
@@ -96,23 +96,25 @@ class ParserEML(object):
             e_from = eml.headers.get('From')
             e_to = eml.headers.get('To')
             e_time = eml.headers.get('Date')
-            trans_subject = translate(self.src_lang, self.des_lang, e_subject)
+            trans = TranslateAPI()
+            db = DB()
+            trans_subject = trans.translate(self.src_lang, self.des_lang, e_subject)
             extracted_data, inline_attachments, base64_attachment = parse_eml_content(eml)
             eml_body = extracted_data['html_body']
             self.soup = BeautifulSoup(eml_body, features="lxml")
             all_paragraphs = self.soup.find_all("p", recursive=True)
-
             all_tags, total = calculate_total_progress(all_paragraphs)
-
             current = 0
             percent = 0
             for tag in all_tags:
                 c = tag.text.strip()
                 if len(c) > 0:
-                    tag.string = translate(self.src_lang, self.des_lang, c)
+                    tag.string = trans.translate(self.src_lang, self.des_lang, c)
                 current = current + 1
                 if percent != int(current * 100 / total):
                     percent = int(current * 100 / total)
-                    update_record_progress(self.row_id, percent)
+                    db.update_record_progress(self.row_id, percent)
             self.save_to_file(e_from, e_to, e_time, trans_subject, self.soup.prettify(), inline_attachments, base64_attachment)
-            update_record_progress(self.row_id, 100)
+            db.update_record_progress(self.row_id, 100)
+            trans.close()
+            db.close()
