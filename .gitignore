@@ -131,3 +131,4 @@ nltk_data
 cached_model_m2m100
 .DS_Store
 test_files/
+plugins.tar
