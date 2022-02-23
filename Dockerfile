@@ -7,6 +7,7 @@ WORKDIR /code
 # 安装支持
 RUN apt update
 RUN apt install -y -qq libgl1-mesa-glx
+RUN apt install -y -qq libreoffice
 RUN pip install -r requirements.txt
 EXPOSE 5001
 CMD ["python", "./app.py", "--thread"]

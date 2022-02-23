@@ -1,6 +1,6 @@
 from flask import Flask,request,jsonify
 from parsers.simple_factory import SimpleFactory
-from converters import p2d
+from converters.converter import Converters
 import json
 
 app = Flask(__name__)
@@ -21,9 +21,8 @@ def convert_file():
             data = json.loads(a)
             convert_type = data['convert_type']
             src_file = data['src_file']
-            des_file = data['des_file']
-            if convert_type == 'p2d': #pdf 2 docx
-                p2d.convert(src_file, des_file)
+            c = Converters(convert_type, src_file)
+            c.convert()
             ret = {}
             ret["code"] = 200
             ret["msg"] = "success"
