@@ -1,5 +1,6 @@
 from parsers.parser_pptx import ParserPPTX
 from parsers.parser_eml import ParserEML
+from parsers.parser_pdf import ParserPDF
 import os
 
 
@@ -11,3 +12,5 @@ class SimpleFactory(object):
             return ParserPPTX(row_id, src_file, des_file, src_lang, des_lang)
         elif ext.lower() == '.eml':
             return ParserEML(row_id, src_file, des_file, src_lang, des_lang)
+        elif ext.lower() == '.pdf':
+            return ParserPDF(row_id, src_file, des_file, src_lang, des_lang)

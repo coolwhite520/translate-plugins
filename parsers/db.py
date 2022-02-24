@@ -9,6 +9,11 @@ class DB(object):
                                   user='root',
                                   password='NB2Ffj!lPTe&yOm5',
                                   database='translate_db')
+        # self.db = pymysql.connect(host='192.168.3.32',
+        #                           port=3310,
+        #                           user='root',
+        #                           password='NB2Ffj!lPTe&yOm5',
+        #                           database='translate_db')
 
     def update_record_progress(self, row_id, percent):
         # 使用cursor()方法获取操作游标

@@ -18,6 +18,7 @@ def generate_sha1(content):
 
 def call_http(src_lang, des_lang, content):
     url = 'http://{0}:{1}/translate'.format("trans_core", 5000)
+    # url = 'http://{0}:{1}/translate'.format("192.168.3.32", 5000)
     now = time.time()  # 返回float数据
     now = int(now)
     format_str = "src_lang={0}&des_lang={1}&content={2}&timestamp={3}".format(src_lang, des_lang, content, now)
@@ -38,6 +39,8 @@ class TranslateAPI(object):
     def __init__(self):
         self.r = redis.StrictRedis(host='trans_redis', port=6379, db=0, decode_responses=True, charset='UTF-8',
                                    encoding='UTF-8')
+        # self.r = redis.StrictRedis(host='192.168.3.32', port=6379, db=0, decode_responses=True, charset='UTF-8',
+        #                            encoding='UTF-8')
 
     def translate(self, src_lang, des_lang, content):
         format_str = "src_lang={0}&des_lang={1}&content={2}".format(src_lang, des_lang, content)
