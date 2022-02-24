@@ -1,26 +1,5 @@
-from pdf2docx import Converter
 import subprocess
 import os
-
-
-def p2dx(src_file):
-    portion = os.path.splitext(src_file)
-    if len(portion) > 1:
-        cv = Converter(src_file)
-        output_file_docx = portion[0] + ".docx"
-        cv.convert(output_file_docx)
-        cv.close()
-        # 将docx转doc
-        dx2d(output_file_docx)
-        # 删除中间的docx
-        os.unlink(output_file_docx)
-        output_file_dox = portion[0] + ".doc"
-        # 将doc转docx
-        d2dx(output_file_dox)
-        # 删除中间的doc
-        os.unlink(output_file_dox)
-    else:
-        raise IndexError("文件名解析错误")
 
 
 def dx2d(src_file):
@@ -54,9 +33,7 @@ class Converters(object):
         self.src_file = src_file
 
     def convert(self):
-        if self.convert_type == 'p2dx':
-            p2dx(self.src_file)
-        elif self.convert_type == 'd2dx':
+        if self.convert_type == 'd2dx':
             d2dx(self.src_file)
         elif self.convert_type == 'p2px':
             p2px(self.src_file)

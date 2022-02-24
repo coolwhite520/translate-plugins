@@ -9,5 +9,6 @@ RUN apt update
 RUN apt install -y -qq libgl1-mesa-glx
 RUN apt install -y -qq libreoffice
 RUN pip install -r requirements.txt
+RUN pip install PyMuPDF
 EXPOSE 5001
 CMD ["python", "./app.py", "--thread"]
