@@ -6,19 +6,14 @@ ADD . /code
 WORKDIR /code
 RUN rm -rf ./venv ./Dockerfile ./build.sh
 # 安装libreoffice
-# 安装支持
 RUN apt update
-RUN tar -zxvf LibreOffice_7.3.0.3_Linux_x86-64_deb.tar.gz
-RUN dpkg -i ./LibreOffice_7.3.0.3_Linux_x86-64_deb/DEBS/*.deb
-RUN rm -rf LibreOffice_7.3.0.3_Linux_x86-64_deb.tar.gz
-RUN rm -rf LibreOffice_7.3.0.3_Linux_x86-64_deb
-
-#RUN apt install -y -qq libreoffice
+RUN apt install -y -qq libreoffice
 RUN \
     pip install pip --upgrade \
     && pip install -r requirements.txt \
     && pip uninstall -y fitz \
     && pip uninstall -y pymupdf \
-    && pip install PyMuPDF
+    && pip install pymupdf
+RUN rm -rf ./requirements.txt
 EXPOSE 5001
 CMD ["python", "./app.py", "--thread"]
