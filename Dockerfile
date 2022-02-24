@@ -4,8 +4,7 @@ FROM python:3.8.7
 ADD . /code
 # 设置code文件夹是工作目录
 WORKDIR /code
-RUN rm -rf ./venv
-RUN rm -rf ./Dockerfile
+RUN rm -rf ./venv ./Dockerfile ./build.sh
 # 安装libreoffice
 # 安装支持
 RUN apt update
