@@ -15,7 +15,7 @@ RUN apt update
 #    && pip uninstall -y pymupdf \
 #    && pip install pymupdf
 RUN pip install pip --upgrade \
-    && pip install -r requirements.txt \
+    && pip install -r requirements.txt
 RUN rm -rf ./requirements.txt
 EXPOSE 5002
 CMD ["python", "./app.py", "--thread"]
