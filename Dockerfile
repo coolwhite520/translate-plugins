@@ -7,13 +7,15 @@ WORKDIR /code
 RUN rm -rf ./venv ./Dockerfile ./build.sh
 # 安装libreoffice
 RUN apt update
-RUN apt install -y -qq libreoffice
-RUN \
-    pip install pip --upgrade \
+#RUN apt install -y -qq libreoffice
+#RUN \
+#    pip install pip --upgrade \
+#    && pip install -r requirements.txt \
+#    && pip uninstall -y fitz \
+#    && pip uninstall -y pymupdf \
+#    && pip install pymupdf
+RUN pip install pip --upgrade \
     && pip install -r requirements.txt \
-    && pip uninstall -y fitz \
-    && pip uninstall -y pymupdf \
-    && pip install pymupdf
 RUN rm -rf ./requirements.txt
-EXPOSE 5001
+EXPOSE 5002
 CMD ["python", "./app.py", "--thread"]

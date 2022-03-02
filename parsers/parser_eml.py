@@ -8,7 +8,6 @@ from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
 import base64
 from flanker.mime import create
-
 from bs4 import BeautifulSoup
 
 
