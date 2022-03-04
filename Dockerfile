@@ -7,6 +7,7 @@ WORKDIR /code
 RUN rm -rf ./venv ./Dockerfile ./build.sh
 # 安装libreoffice
 RUN apt update
+RUN apt install -y -qq libgl1-mesa-glx
 #RUN apt install -y -qq libreoffice
 #RUN \
 #    pip install pip --upgrade \
