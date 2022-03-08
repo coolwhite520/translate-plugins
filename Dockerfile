@@ -2,7 +2,6 @@
 FROM python:3.8.7
 #代码添加到code文件夹
 ADD ./app.py  /code/app.py
-ADD ./config.ini  /code/config.ini
 ADD ./requirements.txt  /code/requirements.txt
 # 设置code文件夹是工作目录
 WORKDIR /code
