@@ -1,9 +1,18 @@
 from flask import Flask,request,jsonify
-from converters.converter import Converters
 import json
+import subprocess
+import os
+from pdf2docx import Converter
+
+
 
 app = Flask(__name__)
 
+def p2dx(src_file):
+    des_file = os.path.splitext(src_file)[0] + ".docx"
+    cv = Converter(src_file)
+    cv.convert(des_file)
+    cv.close()
 
 @app.route('/convert_file', methods=['POST'])
 def convert_file():
@@ -14,8 +23,8 @@ def convert_file():
             data = json.loads(a)
             convert_type = data['convert_type']
             src_file = data['src_file']
-            c = Converters(convert_type, src_file)
-            c.convert()
+            if convert_type == 'p2dx':
+                p2dx(src_file)
             ret["code"] = 200
             ret["msg"] = "success"
             return jsonify(ret)
